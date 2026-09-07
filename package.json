@@ -1,5 +1,6 @@
 {
   "name": "slotly",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +9,13 @@
     "start": "next start",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check --write ."
+    "check": "biome check --write .",
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit"
   },
   "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.8",
+    "dotenv": "^17.4.2",
     "next": "16.3.4",
     "postcss": "^8.5.28",
     "react": "19.2.8",
@@ -18,10 +23,12 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",
+    "@prisma/cli-engine": "0.2.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prisma": "^8.0.0-rc.10",
     "tailwindcss": "^4.3.3",
     "typescript": "^5"
   }

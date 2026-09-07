@@ -6,9 +6,9 @@ automatically.
 
 ## Stack
 
-Next.js 16 (App Router) · TypeScript · React 19 · Tailwind v4 · Prisma + Postgres (Neon) ·
-Better-Auth · Resend — no separate backend framework, no tRPC: Server Actions handle reads and
-writes directly. See `CLAUDE.md` for architecture and conventions.
+Next.js 16 (App Router) · TypeScript · React 19 · Tailwind v4 · Prisma 8 ("Prisma Next", RC) +
+Postgres (Neon) · Better-Auth · Resend — no separate backend framework, no tRPC: Server Actions
+handle reads and writes directly. See `CLAUDE.md` for architecture and conventions.
 
 ## Getting started
 

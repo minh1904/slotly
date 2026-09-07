@@ -10,11 +10,16 @@ A minimal booking scheduler, in the spirit of a stripped-down Calendly.
 - API layer: **Server Actions only** (`"use server"`) — no tRPC. Route Handlers are only for the
   Google Calendar webhook. Matches where Rallly (closest reference repo) is already heading: its
   own tRPC is frozen to legacy reads, all new mutations go through Server Actions.
-- DB: Postgres (Neon) + **Prisma**.
+- DB: Postgres (Neon) + **Prisma 8 / "Prisma Next"** (RC — deliberately bleeding-edge, matching
+  Next.js 16 canary). Contract-first: `src/prisma/contract.prisma`, not classic
+  `schema.prisma`/`PrismaClient`. Rallly/Cal.diy (reference repos) use stable Prisma 6/7 instead —
+  this is a conscious divergence, not an oversight. Before touching any Prisma code, read
+  `.claude/skills/prisma-8/SKILL.md` (ships with the installed version, more current than training
+  data — treat it as the source of truth over anything remembered about Prisma).
 - Auth: **Better-Auth**.
 - Recurring rules: `rrule.js`. Timezone: date-fns v4 + `@date-fns/tz`. Email: Resend.
 
-Not installed yet.
+DB connected (Neon). Auth/recurring-rules/timezone/email libraries not installed yet.
 
 ## Architecture (`src/`)
 
@@ -30,7 +35,10 @@ app → features → components → lib
   logic. UI alone doesn't qualify — it belongs in `components/`, or a `components/` folder inside
   another feature.
 - `components/` — shared, domain-agnostic UI only. Never imports from `features/`.
-- `lib/` — infra/cross-cutting (db client, auth config...). Never imports from `features/`/`components/`/`app/`.
+- `lib/` — infra/cross-cutting (auth config...). Never imports from `features/`/`components/`/`app/`.
+- `src/prisma/` — Prisma-owned, sits outside the four layers as infrastructure the tool manages
+  (`contract.prisma`, generated `contract.json`/`contract.d.ts`, `db.ts`). `data.ts`/`mutations.ts`
+  import the client from here directly (`from "@/prisma/db"`) — no indirection through `lib/`.
 
 Inside each feature, use only these file names (don't invent new ones):
 
