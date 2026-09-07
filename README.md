@@ -1,19 +1,14 @@
 # Slotly
 
-Mini booking scheduler (a stripped-down Calendly) — host sets weekly availability, invitees book a
-slot without double-booking, bookings sync one-way to Google Calendar, confirmation emails sent
+A minimal booking scheduler. A host sets weekly availability, invitees book a slot without
+double-booking, bookings sync one-way to Google Calendar, and confirmation emails are sent
 automatically.
-
-**Status:** 🚧 Building (Week 1/4) — full roadmap at
-[`fullstack-portfolio/01-booking-scheduler`](https://github.com/minh1904/idea/tree/main/01-booking-scheduler).
-
-Project 01 in a 3-project fullstack portfolio (booking/business-logic — the other two are a
-creative WebGL SaaS and an AI RAG doc assistant).
 
 ## Stack
 
-Next.js 16 (App Router) · TypeScript · React 19 · Tailwind v4 — no separate backend, uses Route
-Handlers/Server Actions. See `CLAUDE.md` for architecture and conventions.
+Next.js 16 (App Router) · TypeScript · React 19 · Tailwind v4 · Prisma + Postgres (Neon) ·
+Better-Auth · Resend — no separate backend framework, no tRPC: Server Actions handle reads and
+writes directly. See `CLAUDE.md` for architecture and conventions.
 
 ## Getting started
 

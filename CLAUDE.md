@@ -2,15 +2,19 @@
 
 # Slotly
 
-Mini booking scheduler (like a stripped-down Calendly) — a fullstack learning portfolio project.
-
-Full spec (product research, MVP scope, roadmap): [`fullstack-portfolio/01-booking-scheduler`](https://github.com/minh1904/idea/tree/main/01-booking-scheduler)
-— read before adding features or changing architecture.
+A minimal booking scheduler, in the spirit of a stripped-down Calendly.
 
 ## Stack
 
-Next.js 16 App Router + TypeScript + React 19 + Tailwind v4, bun. DB/ORM/Auth/email: not installed
-yet, see the Tech table in the spec linked above when starting to code.
+- Next.js 16 App Router + TypeScript + React 19 + Tailwind v4, bun.
+- API layer: **Server Actions only** (`"use server"`) — no tRPC. Route Handlers are only for the
+  Google Calendar webhook. Matches where Rallly (closest reference repo) is already heading: its
+  own tRPC is frozen to legacy reads, all new mutations go through Server Actions.
+- DB: Postgres (Neon) + **Prisma**.
+- Auth: **Better-Auth**.
+- Recurring rules: `rrule.js`. Timezone: date-fns v4 + `@date-fns/tz`. Email: Resend.
+
+Not installed yet.
 
 ## Architecture (`src/`)
 
