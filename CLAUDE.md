@@ -67,7 +67,9 @@ real convention, no gitmoji:
 
 ## Code style
 
-- All code, comments, commit messages, and docs: **English only**.
+- Code, comments, commit messages, `README.md`, `CLAUDE.md`: **English only** (this is going
+  open-source — keep the project-facing surface professional and language-neutral).
+- `docs/` (product vision, planning): **Vietnamese** — internal thinking, not project-facing.
 - Comments: short, one line, only when the *why* isn't obvious from the code. No multi-line
   comment blocks, no restating what the code already says.
 
