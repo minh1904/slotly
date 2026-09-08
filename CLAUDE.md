@@ -44,6 +44,9 @@ app → features → components → lib
   logic. UI alone doesn't qualify — it belongs in `components/`, or a `components/` folder inside
   another feature.
 - `components/` — shared, domain-agnostic UI only. Never imports from `features/`.
+  **MVP: use shadcn/ui components as-is** (`bunx shadcn add <component>`) instead of hand-rolling
+  primitives (buttons, inputs, dialogs, dropdowns, etc.) — only write a custom component here when
+  no shadcn equivalent exists. Revisit once the MVP is past the "make it work" stage.
 - `lib/` — infra/cross-cutting: `db.ts` (Prisma Client singleton), `auth.ts` (Better-Auth config).
   Never imports from `features/`/`components/`/`app/`. `data.ts`/`mutations.ts` import the DB
   client from here (`from "@/lib/db"`).
@@ -82,6 +85,13 @@ real convention, no gitmoji:
 - `type`: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`
 - `scope`: feature name (`booking`, `availability`, `calendar-sync`...) — matches the folder name under `features/`
 - Examples: `feat(booking): prevent double-booking via transaction`, `fix(availability): wrong time on DST`
+
+## Dependencies
+
+- **Never add a new library/package without asking first.** Before planning or implementing
+  anything that would introduce a new dependency (`bun add ...`, a new devDependency, etc.), stop
+  and confirm the choice with the user — name the library and why it's needed — and only proceed
+  after they approve. Applies even mid-task; don't silently pull in a package to unblock yourself.
 
 ## Code style
 
