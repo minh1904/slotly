@@ -23,6 +23,9 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  schedules            Schedule[]
+  availabilitySettings AvailabilitySettings?
+
   @@unique([email])
   @@map("user")
 }
@@ -73,4 +76,67 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Schedule {
+  id        String                 @id @default(cuid())
+  userId    String
+  name      String
+  isDefault Boolean                @default(false)
+  timezone  String
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rules     AvailabilityRule[]
+  overrides AvailabilityOverride[]
+
+  @@index([userId])
+  @@map("schedule")
+}
+
+model AvailabilityRule {
+  id          String   @id @default(cuid())
+  scheduleId  String
+  dayOfWeek   Int
+  startMinute Int
+  endMinute   Int
+  schedule    Schedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@index([scheduleId, dayOfWeek])
+  @@map("availability_rule")
+}
+
+model AvailabilityOverride {
+  id         String                      @id @default(cuid())
+  scheduleId String
+  date       DateTime                    @db.Date
+  isBlocked  Boolean                     @default(false)
+  schedule   Schedule                    @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  blocks     AvailabilityOverrideBlock[]
+
+  @@unique([scheduleId, date])
+  @@map("availability_override")
+}
+
+model AvailabilityOverrideBlock {
+  id          String               @id @default(cuid())
+  overrideId  String
+  startMinute Int
+  endMinute   Int
+  override    AvailabilityOverride @relation(fields: [overrideId], references: [id], onDelete: Cascade)
+
+  @@index([overrideId])
+  @@map("availability_override_block")
+}
+
+model AvailabilitySettings {
+  id                  String @id @default(cuid())
+  userId              String @unique
+  bufferBeforeMinutes Int    @default(0)
+  bufferAfterMinutes  Int    @default(0)
+  minNoticeHours      Int    @default(0)
+  maxAdvanceDays      Int?
+  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("availability_settings")
 }
