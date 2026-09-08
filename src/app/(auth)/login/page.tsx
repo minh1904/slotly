@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { headers } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { LoginForm } from "@/features/auth/components/login-form";
@@ -9,7 +9,7 @@ export default async function LoginPage() {
   const session = await auth.api.getSession({ headers: await headers() });
 
   if (session) {
-    redirect("/");
+    redirect("/home");
   }
 
   return (
